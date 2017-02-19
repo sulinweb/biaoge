@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>表格</title>
+    <script src="ajax.js"></script>
 </head>
 <style>
     table{
@@ -49,8 +50,8 @@
         top:0;
         left:10px;
         display: block;
-        animation-delay: -1s; /*延迟时间*/
-        content: "";/*撑开容器*/
+        animation-delay: -1s; 
+        content: "";
     }
     .wait:after{
         width: 5px;
@@ -62,9 +63,9 @@
         display: block;
         content: "";
     }
-    @keyframes wait {/*动画，关键帧  加动画的名称*/
+    @keyframes wait {
         0%{
-            transform: scale(1);/*缩放函数*/
+            transform: scale(1);
         }
         100%{
             transform: scale(2,2);
@@ -77,25 +78,27 @@
         color: #FF0000;
     }
 </style>
-<script src="ajax.js"></script>
+
 <script>
     window.onload=function () {
         //声明
         var tbody=document.querySelector("tbody");
         var wait=document.getElementsByClassName("wait")[0];
         var add=document.getElementsByClassName("add")[0];
-        ajax({//在数据库中找数据
-            url:"1.php",
+        //在数据库中找数据
+        ajax({
+            url:"select.php",
             dataType:"json",
             success:function (e) {
                 wait.style.display="none";
-                //console.log(e);
+               
                 var str="";
                 for(var i=0;i<e.length;i++){
                     str+="<tr id="+e[i].id+">";
                     str+="<td attr='name'>"+e[i].name+"</td>";
-                    str+="<td attr='age'>"+e[i].age+"</td>";
                     str+="<td attr='sex'>"+e[i].sex+"</td>";
+                    str+="<td attr='age'>"+e[i].age+"</td>";
+                    str+="<td attr='classes'>"+e[i].classes+"</td>";
                     str+="<td><div class='del'>删除</div></td>";
                     str+="</tr>";
                 }
@@ -113,8 +116,9 @@
                     var tr=document.createElement("tr");
                     var str="";
                     str+="<td attr='name'> </td>";
-                    str+="<td attr='age'> </td>";
                     str+="<td attr='sex'> </td>";
+                    str+="<td attr='age'> </td>";
+                    str+="<td attr='classes'> </td>";
                     str+="<td><div class='del'>删除</div></td>";
                     tr.setAttribute("id",e);
                     tr.innerHTML=str;
@@ -172,19 +176,14 @@
 
 
 </script>
-
-
-<!--
-1.通过ajax取数据
-2.mysqli 连接数据库的方式
--->
 <body>
 <table>
     <thead>
         <tr>
             <th>姓名</th>
-            <th>年龄</th>
             <th>性别</th>
+            <th>年龄</th>
+            <th>班级</th>
             <th>操作</th>
         </tr>
     </thead>
